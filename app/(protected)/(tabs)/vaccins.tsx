@@ -1,14 +1,15 @@
+// ...existing code...
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    Dimensions,
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const { width } = Dimensions.get('window');
@@ -19,7 +20,7 @@ const vaccineData = [
     name: "Febre Amarela",
     description: "Protege contra a febre amarela.",
     technicalDetails: "Vacina de vírus atenuado. Dose única em áreas de risco. Necessário reforço a cada 10 anos para viajantes.",
-    ubsAvailable: ["UBS Boa Viagem", "UBS Pina"], // Nomes das UBSs que possuem
+    ubsAvailable: ["UBS Boa Viagem", "UBS Pina"],
   },
   {
     id: "2",
@@ -63,7 +64,6 @@ export default function VaccinsScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredVaccines, setFilteredVaccines] = useState(vaccineData);
 
-  // Função de pesquisa
   const handleSearch = (text: string) => {
     setSearchQuery(text);
     if (text) {
@@ -81,20 +81,22 @@ export default function VaccinsScreen() {
   const renderVaccineItem = ({ item }: { item: typeof vaccineData[0] }) => (
     <TouchableOpacity
       style={styles.vaccineCard}
-      onPress={() => router.push({
-        pathname: "/vaccine-details", // Rota para detalhes da vacina (será criada abaixo)
-        params: {
-          name: item.name,
-          description: item.description,
-          technicalDetails: item.technicalDetails,
-          ubsAvailable: JSON.stringify(item.ubsAvailable), // Passa array como string
-        },
-      })}
+      onPress={() =>
+        router.push({
+          pathname: "/(protected)/(tabs)/agendamento",
+          params: {
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            technicalDetails: item.technicalDetails,
+            ubsAvailable: JSON.stringify(item.ubsAvailable),
+          },
+        })
+      }
     >
       <MaterialIcons name="vaccines" size={24} color="#002856" style={styles.vaccineIcon} />
       <Text style={styles.vaccineName}>{item.name}</Text>
-      {/* Aqui estava a tag de fechamento para o ícone de caneta que pode ter causado o problema */}
-      <FontAwesome5 name="pencil-alt" size={16} color="#002856" /> 
+      <FontAwesome5 name="pencil-alt" size={16} color="#002856" />
     </TouchableOpacity>
   );
 
@@ -110,7 +112,6 @@ export default function VaccinsScreen() {
           value={searchQuery}
           onChangeText={handleSearch}
         />
-        {/* Adicionado o fechamento correto do TextInput que estava faltando na imagem */}
       </View>
 
       <FlatList
@@ -119,11 +120,10 @@ export default function VaccinsScreen() {
         renderItem={renderVaccineItem}
         contentContainerStyle={styles.vaccinesList}
       />
-      {/* Adicionado o fechamento correto do FlatList que estava faltando na imagem */}
 
       <TouchableOpacity
         style={styles.chooseUbsButton}
-        onPress={() => router.push("/ubs")} // Navega para a tela de UBS
+        onPress={() => router.push("/ubs")}
       >
         <Text style={styles.chooseUbsButtonText}>Escolher UBS</Text>
       </TouchableOpacity>
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     marginTop: 20,
-    width: width - 32, // Para centralizar e ter margem
-    alignSelf: 'center', // Centraliza o botão
+    width: width - 32,
+    alignSelf: 'center',
   },
   chooseUbsButtonText: {
     color: "#fff",
