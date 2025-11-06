@@ -27,6 +27,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen
                 name="vaccins"
+                href="/(protected)/(tabs)/agendamentos"
                 options={{
                     title: 'Agendar',
                     tabBarLabel: 'Agendar',
